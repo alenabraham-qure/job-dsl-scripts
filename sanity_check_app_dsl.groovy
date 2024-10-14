@@ -1,5 +1,5 @@
 def repoUrl = 'https://github.com/alenabraham-qure/sanity-check-app.git'
-def branchesToBuild = 'main|feature/.*'
+def branchesToInclude = 'main feature/*'
 
 def productDirs = ['backend', 'frontend']
 
@@ -10,12 +10,16 @@ productDirs.each { product ->
                 source {
                     git {
                         remote(repoUrl)
-                        includes(branchesToBuild)
-                        // Proper use of withTraits for branch discovery and other traits
+                        // Using the correct traits method for filtering branches
                         traits {
                             // Branch discovery strategy
                             branchDiscovery {
                                 strategyId(1)  // Discover all branches
+                            }
+                            // Branch filtering (include only specified branches)
+                            headWildcardFilter {
+                                includes(branchesToInclude)
+                                excludes('') // Leave empty if you don't want to exclude any branches
                             }
                         }
                     }
