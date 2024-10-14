@@ -9,12 +9,12 @@ productDirs.each { product ->
             git {
                 remote(repoUrl)
                 includes(branchesToBuild)  // Branches to build: main and feature/*
-                traits {
-                    // Use the correct trait for branch discovery
+                // Correct use of withTraits for branch discovery and other traits
+                withTraits {
+                    // Branch discovery strategy
                     branchDiscovery {
-                        strategyId(1)  // Strategy for discovering branches
+                        strategyId(1)  // Strategy for discovering branches (e.g., discover all branches)
                     }
-                    // Other traits can be added here (like PR discovery, etc.)
                 }
             }
         }
