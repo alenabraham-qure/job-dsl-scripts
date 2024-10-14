@@ -6,14 +6,18 @@ def productDirs = ['backend', 'frontend']
 productDirs.each { product ->
     multibranchPipelineJob("test-${product}") {
         branchSources {
-            git {
-                remote(repoUrl)
-                includes(branchesToBuild)  // Branches to build: main and feature/*
-                // Correct use of withTraits for branch discovery and other traits
-                withTraits {
-                    // Branch discovery strategy
-                    branchDiscovery {
-                        strategyId(1)  // Strategy for discovering branches (e.g., discover all branches)
+            branchSource {
+                source {
+                    git {
+                        remote(repoUrl)
+                        includes(branchesToBuild)
+                        // Proper use of withTraits for branch discovery and other traits
+                        traits {
+                            // Branch discovery strategy
+                            branchDiscovery {
+                                strategyId(1)  // Discover all branches
+                            }
+                        }
                     }
                 }
             }
