@@ -1,5 +1,5 @@
 def repoUrl = 'https://github.com/alenabraham-qure/sanity-check-app.git'
-def branchesToInclude = 'main feature/*'
+def branchesToInclude = 'main, feature/*'  // Use a comma to separate multiple branches
 
 def productDirs = ['backend', 'frontend']
 
@@ -10,16 +10,17 @@ productDirs.each { product ->
                 source {
                     git {
                         remote(repoUrl)
-                        // Using the correct traits method for filtering branches
                         traits {
-                            // Branch discovery strategy
-                            branchDiscovery {
+                            // Trait for branch discovery
+                            trait {
+                                $class = 'BranchDiscoveryTrait'
                                 strategyId(1)  // Discover all branches
                             }
-                            // Branch filtering (include only specified branches)
-                            headWildcardFilter {
+                            // Trait for branch filtering
+                            trait {
+                                $class = 'WildcardSCMHeadFilterTrait'
                                 includes(branchesToInclude)
-                                excludes('') // Leave empty if you don't want to exclude any branches
+                                // Exclude line can be omitted if not needed
                             }
                         }
                     }
