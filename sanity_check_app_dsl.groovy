@@ -12,13 +12,11 @@ productDirs.each { product ->
                         remote(repoUrl)
                         traits {
                             // Trait for branch discovery
-                            trait {
-                                $class = 'BranchDiscoveryTrait'
+                            trait('jenkins.branch.BranchDiscoveryTrait') {
                                 strategyId(1)  // Discover all branches
                             }
                             // Trait for branch filtering
-                            trait {
-                                $class = 'WildcardSCMHeadFilterTrait'
+                            trait('jenkins.branch.WildcardSCMHeadFilterTrait') {
                                 includes(branchesToInclude)
                                 // Exclude line can be omitted if not needed
                             }
